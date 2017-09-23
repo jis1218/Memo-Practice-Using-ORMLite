@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.example.memousingorm"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+//의존성 라이브러리 관리해줌
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar']) //내 프로젝트와 연관된 디렉트로를 뒤져서 *.jar 파일을 다 쓰겠다는 것
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    //depencency 추가
+    compile 'com.j256.ormlite:ormlite-android:5.0' // 5.+ 하면 5점 대 중 가장 최신 버전
+    compile 'com.android.support:recyclerview-v7:26+' //위에 버전과 맞춰줘야 한다.
+    compile 'com.android.support:cardview-v7:26+'
+}
