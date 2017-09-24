@@ -2,9 +2,12 @@ package com.example.memousingorm.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,6 +53,7 @@ public class FileReadWrite {
     public static String read(Context context, String fileName) throws IOException {
 
         FileInputStream fis = null;
+        ByteArrayInputStream bais = null;
         BufferedInputStream bis = null;
         StringBuilder stringBuilder = new StringBuilder();
         try {

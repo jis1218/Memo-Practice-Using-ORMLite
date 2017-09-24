@@ -18,7 +18,7 @@ import java.util.List;
 public class DrawingNoteDAO {
 
     private DBHelper helper;
-    private Dao<DrawingNote, Long> dao = null;
+    private Dao<DrawingNote, String> dao = null;
 
     public DrawingNoteDAO(Context context) {
         helper = new DBHelper(context);
@@ -48,7 +48,7 @@ public class DrawingNoteDAO {
         return list;
     }
 
-    public DrawingNote readOneById(long id) {
+    public DrawingNote readOneById(String id) {
         DrawingNote result = null;
         try {
             result = dao.queryForId(id);

@@ -8,16 +8,19 @@ import com.j256.ormlite.table.DatabaseTable;
 /**
  * 데이터 모델링 - 도메인 추출 - 개념 모델링
  */
-@DatabaseTable(tableName = "drawingnote") //클래스는 대문자로 시작하므로 소문자로 시작하기 위해서는 Annotation으로 지정해준다.
+@DatabaseTable(tableName = "drawingnote2") //클래스는 대문자로 시작하므로 소문자로 시작하기 위해서는 Annotation으로 지정해준다.
 public class DrawingNote {
     // 식별자
     @DatabaseField(generatedId = true)
     long id;
     // 제목
+    @DatabaseField
     String title;
     // 그림
+    @DatabaseField
     String bitmap_path;
     // 날짜
+    @DatabaseField
     long datetime;
 
     public long getId() {

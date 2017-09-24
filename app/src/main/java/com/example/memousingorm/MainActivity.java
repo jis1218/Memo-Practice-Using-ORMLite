@@ -41,15 +41,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         DrawingNoteDAO dao = new DrawingNoteDAO(this);
         // 화면 만들기
         // 데이터 정의
 //
         ArrayList<DrawingNote> data = dao.readAll();
 
-        CustomAdapter adapter = new CustomAdapter();
-
-        adapter.setData(data);
+        CustomAdapter adapter = new CustomAdapter(data, this);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 

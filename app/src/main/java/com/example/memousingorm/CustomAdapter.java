@@ -1,14 +1,19 @@
 package com.example.memousingorm;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memousingorm.model.DrawingNote;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -18,16 +23,16 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
     // 1. 데이터 저장소
-    ArrayList<DrawingNote> data;
+    ArrayList<DrawingNote> data = null;
     Holder holder = null;
+    Context context;
 
-    public void setData(ArrayList<DrawingNote> data) {
-        this.data = data;
-    }
+
     // 2. 생성자
 
-    public CustomAdapter() {
-
+    public CustomAdapter(ArrayList<DrawingNote> data, Context context) {
+        this.data = data;
+        this.context = context;
     }
 
     @Override
@@ -48,20 +53,31 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
     // 1. 데이터 저장소에 객체단위로 꺼내둔다.
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        DrawingNote drawingNote = data.get(position);
+        final DrawingNote drawingNote = data.get(position);
         holder.setTitle(drawingNote.getTitle());
         holder.setDate(drawingNote.getDatetime());
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, BitmapActivity.class);
+                intent.putExtra("fileName", filePathNamer(drawingNote));
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView textTitle, textDate;
+        LinearLayout linearLayout;
 
         public Holder(View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.txtTitle);
             textDate = itemView.findViewById(R.id.txtDate);
+            linearLayout = itemView.findViewById(R.id.linearLayout);
 
         }
 
@@ -73,6 +89,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             textDate.setText(sdf.format(date));
         }
+    }
+
+    public String filePathNamer(DrawingNote drawingNote) {
+        return context.getFilesDir().toString()+"/" + drawingNote.getBitmap_path();
+
     }
 
 

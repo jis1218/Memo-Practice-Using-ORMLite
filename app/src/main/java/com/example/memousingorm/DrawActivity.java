@@ -17,6 +17,7 @@ import com.example.memousingorm.model.DrawingNote;
 import com.example.memousingorm.util.FileReadWrite;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DrawActivity extends AppCompatActivity {
 
@@ -27,14 +28,16 @@ public class DrawActivity extends AppCompatActivity {
     SeekBar seekBar;
     int colorcolor = Color.BLACK;
     int seek = 1;
+    ArrayList<DrawingNote> list = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
         stage = (FrameLayout) findViewById(R.id.stage);
-
+        list = new ArrayList<>();
         drawView = new DrawView2(DrawActivity.this);
+        stage.setBackgroundColor(Color.WHITE);
         stage.addView(drawView);
         btnDlt = (Button) findViewById(R.id.btnDlt);
         dbInit();
@@ -172,6 +175,7 @@ public class DrawActivity extends AppCompatActivity {
         drawingNote.setId(System.currentTimeMillis());
         drawingNote.setTitle(filename);
         drawingNote.setDatetime(System.currentTimeMillis());
+        //list.add(drawingNote);
         dao.create(drawingNote);
 
         bitmap.recycle(); // Native에 다 썼다고 알려준다. 가비지 컬렉터 대상이 아님
