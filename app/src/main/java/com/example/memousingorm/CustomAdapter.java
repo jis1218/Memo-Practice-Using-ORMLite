@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
     // 1. 데이터 저장소
     ArrayList<DrawingNote> data = null;
-    Holder holder = null;
+
     Context context;
 
 

@@ -32,3 +32,20 @@ public String filePathNamer(DrawingNote drawingNote) {
 ```
 
 ##### 그림이 그려지는 framelayout을 정의할 때 백그라운드를 흰색으로 설정하지 않으면 그림의 배경이 검은색으로 저장됨
+
+##### table이 없을 시 최초 한번만 onCreate가 호출된다.
+```java
+@Override
+public class DBHelper extends OrmLiteSqliteOpenHelper {
+  ...
+public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+    try {
+        TableUtils.createTable(connectionSource, DrawingNote.class);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+}
+```
+
+##### 결국 데이터베이스의 입력, 출력을 담당하는 클래스는 DAO 클래스임

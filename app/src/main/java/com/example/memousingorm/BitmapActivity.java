@@ -22,6 +22,7 @@ public class BitmapActivity extends AppCompatActivity {
     FrameLayout frameLayout = null;
     Button btnBack = null;
     String fileName = null;
+    Bitmap bitmap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,13 @@ public class BitmapActivity extends AppCompatActivity {
         initView();
         addBitmapView();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bitmap.recycle();
+        bitmap = null;
     }
 
     public void initView(){
@@ -49,7 +57,7 @@ public class BitmapActivity extends AppCompatActivity {
     }
 
     public Bitmap getBitmap(String fileName){
-        Bitmap bitmap = null;
+
 
         try {
             File file = new File(fileName);

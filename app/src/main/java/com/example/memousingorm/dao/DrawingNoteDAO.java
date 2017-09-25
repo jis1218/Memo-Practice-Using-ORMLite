@@ -67,7 +67,6 @@ public class DrawingNoteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
@@ -77,7 +76,6 @@ public class DrawingNoteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void delete(DrawingNote drawingNote) {
@@ -86,6 +84,5 @@ public class DrawingNoteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }

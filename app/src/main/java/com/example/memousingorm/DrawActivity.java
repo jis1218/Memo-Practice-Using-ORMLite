@@ -16,6 +16,7 @@ import com.example.memousingorm.dao.DrawingNoteDAO;
 import com.example.memousingorm.model.DrawingNote;
 import com.example.memousingorm.util.FileReadWrite;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -161,8 +162,21 @@ public class DrawActivity extends AppCompatActivity {
         //레이아웃에서 그려진 내용을 bitmap 형태로 가져온다.
         Bitmap bitmap = stage.getDrawingCache();
 
-        //이미지 파일을 저장하고
+        //이미지 파일을 저장하고 파일 이름 저장
         String filename = String.valueOf(System.currentTimeMillis());
+
+        //파일명 중복검사
+        // 1. 현재 파일명을 풀 경로로 File 객체로 변환
+        String dir = getFilesDir().getAbsolutePath();
+        String fileFullPath = dir + "/" +filename;
+        File file = new File(fileFullPath);
+        int count = 0;
+        if(file.exists()){
+            count++;
+            filename = System.currentTimeMillis() + "("+count+")";
+            file = new File(dir+"/"+filename);
+        }
+
         try {
             // /data/data/패키지/files 밑에 쌓이게 됨
             FileReadWrite.write(this, filename, bitmap);
