@@ -3,6 +3,7 @@ package com.example.memousingorm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,9 @@ import java.util.ArrayList;
  */
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
+
+    private static final String ROOT = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static final String DIR = ROOT + "/temp/picture";
     // 1. 데이터 저장소
     ArrayList<DrawingNote> data = null;
 
@@ -33,6 +37,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
     public CustomAdapter(ArrayList<DrawingNote> data, Context context) {
         this.data = data;
         this.context = context;
+        Toast.makeText(context, DIR, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -44,7 +49,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
-
         return new Holder(view);
     }
 
@@ -59,6 +63,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context, ROOT, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, BitmapActivity.class);
                 intent.putExtra("fileName", filePathNamer(drawingNote));
                 context.startActivity(intent);
@@ -92,7 +97,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
     }
 
     public String filePathNamer(DrawingNote drawingNote) {
-        return context.getFilesDir().toString()+"/" + drawingNote.getBitmap_path();
+        return DIR + "/" + drawingNote.getBitmap_path() + ".jpg";
 
     }
 

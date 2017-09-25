@@ -3,6 +3,7 @@ package com.example.memousingorm;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.example.memousingorm.dao.DrawingNoteDAO;
 import com.example.memousingorm.model.DrawingNote;
@@ -144,16 +146,8 @@ public class DrawActivity extends AppCompatActivity {
             }
         });
     }
-
-    public int getColor() {
-        return colorcolor;
-    }
-
-    public int getSeek() {
-        return seek;
-    }
-
-
+    private static final String ROOT = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static final String DIR = "/temp/picture";
     public void captureCanvas(){
         // 드로잉 캐쉬를 먼저 지워주ㅝ야 한다.
         stage.destroyDrawingCache();
@@ -163,18 +157,19 @@ public class DrawActivity extends AppCompatActivity {
         Bitmap bitmap = stage.getDrawingCache();
 
         //이미지 파일을 저장하고 파일 이름 저장
-        String filename = String.valueOf(System.currentTimeMillis());
+        String filename = String.valueOf(System.currentTimeMillis()) + ".jpg";
 
         //파일명 중복검사
         // 1. 현재 파일명을 풀 경로로 File 객체로 변환
-        String dir = getFilesDir().getAbsolutePath();
-        String fileFullPath = dir + "/" +filename;
+
+        //String dir = getFilesDir().getAbsolutePath();
+        String fileFullPath = ROOT + DIR + "/" +filename;
         File file = new File(fileFullPath);
         int count = 0;
         if(file.exists()){
             count++;
             filename = System.currentTimeMillis() + "("+count+")";
-            file = new File(dir+"/"+filename);
+            file = new File(ROOT + DIR + "/" +filename);
         }
 
         try {
@@ -192,10 +187,9 @@ public class DrawActivity extends AppCompatActivity {
         //list.add(drawingNote);
         dao.create(drawingNote);
 
-        bitmap.recycle(); // Native에 다 썼다고 알려준다. 가비지 컬렉터 대상이 아님
-    }
-    private void init(){
+        Toast.makeText(this, drawingNote.getTitle(), Toast.LENGTH_SHORT).show();
 
+        bitmap.recycle(); // Native에 다 썼다고 알려준다. 가비지 컬렉터 대상이 아님
     }
     DrawingNoteDAO dao;
 
